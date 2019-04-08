@@ -1,6 +1,7 @@
-const MongoClient = require('mongodb').MongoClient;
+// const MongoClient = require('mongodb').MongoClient;
+const {MongoClient, ObjectID} = require('mongodb');
 
-MongoClient.connect('mongodb://localhost:27017/TodoApp', (err, client) => {
+MongoClient.connect('mongodb://localhost:27017', (err, client) => {
     if (err) {
         return console.log('Unable to connect to MongoDB Server');
     }
@@ -32,26 +33,38 @@ MongoClient.connect('mongodb://localhost:27017/TodoApp', (err, client) => {
     //     console.log(JSON.stringify(result.ops, undefined, 2));
     // });
 
-    var user = {
-        username: 'olaoluwa',
-        firstName: 'Ayomide',
-        lastName: 'Oyeyinka'
-    };
+    // var user = {
+    //     username: 'olaoluwa',
+    //     firstName: 'Ayomide',
+    //     lastName: 'Oyeyinka'
+    // };
 
-    usersCollection.find({username: user.username}).toArray().then((u) => {
-        console.log(`Result: ${JSON.stringify(u, undefined, 2)}`);
+    // usersCollection.find({username: user.username}).toArray().then((u) => {
+    //     console.log(`Result: ${JSON.stringify(u, undefined, 2)}`);
 
-        if (u.length === 0) {
-            return usersCollection.insertOne(user, (err, result) => {
-                if (err) {
-                    return console.log('Unable to add user', err);
-                }
-                console.log(`User added \nTime: ${result.ops[0]._id.getTimestamp().toString()}, \nUser info: ${JSON.stringify(result.ops, undefined, 2)}`);
-            });  
-        };
-        console.log('Username already exist.');
-    }).catch((e) => {
-        console.log(e);
+    //     if (u.length === 0) {
+    //         return usersCollection.insertOne(user, (err, result) => {
+    //             if (err) {
+    //                 return console.log('Unable to add user', err);
+    //             }
+    //             console.log(`User added \nTime: ${result.ops[0]._id.getTimestamp().toString()}, \nUser info: ${JSON.stringify(result.ops, undefined, 2)}`);
+    //         });  
+    //     };
+    //     console.log('Username already exist.');
+    // }).catch((e) => {
+    //     console.log(e);
+    // });
+
+    usersCollection.findOneAndUpdate({
+        _id: new ObjectID('5c9e992948ea210c339d282c')
+    }, {
+        $set: {
+            rank: 'Admin'
+        }
+    }, {
+        returnOriginal: false
+    }).then((result) => {
+        console.log(result);
     });
 
     // client.close();
