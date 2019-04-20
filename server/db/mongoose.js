@@ -1,3 +1,5 @@
+// jshint esversion: 6
+
 var mongoose = require('mongoose');
 
 mongoose.Promise = global.Promise;

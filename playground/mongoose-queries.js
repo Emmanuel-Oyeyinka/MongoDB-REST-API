@@ -1,3 +1,5 @@
+// jshint esversion: 6
+
 const {mongoose} = require('./../server/db/mongoose');
 const {Todo} = require('./../server/models/todo');
 
@@ -8,4 +10,4 @@ Todo.findById(id).then((todo) => {
         return console.log('Id not found');
     }
     console.log('Todo', todo);
-})
+});
